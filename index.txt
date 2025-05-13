@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Ridgeway Grammar Primary School</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="badge1.png" alt="Ridgeway Grammar Primary School Logo" />
+    </div>
+    <h1>Ridgeway Grammar Primary School</h1>
+    <nav aria-label="Primary navigation">
+      <a href="#" id="navHome" tabindex="0">Home</a>
+      <a href="#" id="navAbout" tabindex="0">About</a>
+      <a href="#" id="navLogin" tabindex="0">Login</a>
+    </nav>
+  </header>
+
+  <div class="slider-container" aria-label="Image slideshow">
+    <div class="slider" id="slider">
+      <div class="slide slide1" role="img" aria-label="School Students Studying"></div>
+      <div class="slide slide2" role="img" aria-label="School Building Exterior"></div>
+      <div class="slide slide3" role="img" aria-label="Students Playing Sports"></div>
+      <div class="slide slide4" role="img" aria-label="School Library"></div>
+    </div>
+    <button class="nav-button nav-left" id="prevBtn" aria-label="Previous slide" tabindex="0">&#10094;</button>
+    <button class="nav-button nav-right" id="nextBtn" aria-label="Next slide" tabindex="0">&#10095;</button>
+
+    <div class="hero" aria-live="polite" aria-atomic="true">
+      <h2>Welcome to Ridgeway Grammar Primary School</h2>
+      <p>Where every child shines and grows</p>
+    </div>
+  </div>
+
+  <main id="mainContent" tabindex="0">
+    <!-- Landing page content will be rendered here -->
+  </main>
+
+  <!-- Login Modal -->
+  <div id="loginModal" aria-hidden="true" role="dialog" aria-labelledby="loginTitle" aria-modal="true">
+    <div class="login-content" role="document">
+      <h3 id="loginTitle">Student Login</h3>
+      <form id="loginForm" autocomplete="off" novalidate>
+        <label for="usernameInput">Username</label>
+        <input type="text" id="usernameInput" name="username" placeholder="Enter username" autocomplete="username" required />
+        <label for="passwordInput">Password</label>
+        <input type="password" id="passwordInput" name="password" placeholder="Enter password" autocomplete="current-password" required />
+        <p class="error-msg" id="loginError" aria-live="assertive"></p>
+        <button type="submit">Login</button>
+      </form>
+      <button class="close-modal" id="closeLogin" aria-label="Close login form">Cancel</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

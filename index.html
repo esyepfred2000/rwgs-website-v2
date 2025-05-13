@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Ridgeway Grammar Primary School</title>
+<style>
+  /* Reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    color: #222831;
+    min-height: 600px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  /* Header */
+  header {
+    background-color: #0f4c81;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    user-select: none;
+    z-index: 1001;
+    position: relative;
+  }
+  .logo-container {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+  }
+  .logo-container img {
+    max-height: 40px;
+    width: auto;
+    display: block;
+  }
+  header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 1px;
+    flex-grow: 1;
+  }
+  nav {
+    display: flex;
+    gap: 1.2rem;
+  }
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  nav a:hover, nav a:focus {
+    background-color: #2e74b0;
+    outline: none;
+  }
+
+  /* Slider container */
+  .slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 280px;
+    overflow: hidden;
+    margin-top: 0;
+    user-select: none;
+  }
+  .slider {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s ease-in-out;
+  }
+  .slide {
+    flex: 0 0 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+  }
+  /* Sample backgrounds for slides */
+  .slide1 {
+    background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80');
+  }
+  .slide2 {
+    background-image: url('https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=1200&q=80');
+  }
+  .slide3 {
+    background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80');
+  }
+  .slide4 {
+    background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80');
+  }
+  /* Navigation buttons */
+  .nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(15, 76, 129, 0.7);
+    color: white;
+    font-size: 2rem;
+    padding: 0.2rem 0.6rem;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+    z-index: 1002;
+  }
+  .nav-button:hover, .nav-button:focus {
+    background-color: rgba(15, 76, 129, 0.9);
+    outline: none;
+  }
+  .nav-left {
+    left: 16px;
+  }
+  .nav-right {
+    right: 16px;
+  }
+
+  /* Hero Section (text overlay on slider) */
+  .hero {
+    position: absolute;
+    top: 40px; /* slightly below header */
+    width: 100%;
+    max-width: 1200px;
+    color: white;
+    text-align: center;
+    pointer-events: none;
+    z-index: 1003;
+    padding: 2rem 1rem 1rem 1rem;
+    user-select: none;
+  }
+  .hero h2 {
+    font-size: 2.75rem;
+    font-weight: 700;
+    margin: 0 0 0.3rem 0;
+    text-shadow: 0 3px 8px rgba(0,0,0,0.7);
+  }
+  .hero p {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1.5rem;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+  }
+
+  /* Main container */
+  main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem 2rem;
+    margin-top: 280px; /* Push down below slider */
+  }
+
+  /* Sections */
+  section {
+    background: white;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.08);
+  }
+  section h3 {
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+    color: #0f4c81;
+  }
+
+  /* News List */
+  ul.news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 175px;
+    overflow-y: auto;
+  }
+  ul.news-list li {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0.6rem 0;
+    font-size: 1rem;
+    color: #393e46;
+    cursor: default;
+  }
+  ul.news-list li:last-child {
+    border-bottom: none;
+  }
+
+  /* Quick Links grid */
+  .quick-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+  .quick-links button {
+    background-color: #0f4c81;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 1.5rem 0;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .quick-links button:hover, .quick-links button:focus {
+    background-color: #144d87;
+    outline: none;
+  }
+  .quick-links button svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
+  }
+
+  /* Login modal */
+  #loginModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  #loginModal.active {
+    display: flex;
+  }
+  .login-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    padding: 2rem 2.5rem 2.5rem 2.5rem;
+    box-shadow: 0 8px 24px rgba(15,76,129,0.35);
+  }
+  .login-content h3 {
+    margin-top: 0;
+    color: #0f4c81;
+    text-align: center;
+    font-size: 1.75rem;
+  }
+  form label {
+    display: block;
+    font-weight: 600;
+    margin-top: 1rem;
+    color: #222831dd;
+    font-size: 1rem;
+  }
+  form input[type="text"],
+  form input[type="password"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: 1.5px solid #ccc;
+    margin-top: 0.3rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+  }
+  form input[type="text"]:focus,
+  form input[type="password"]:focus {
+    outline: none;
+    border-color: #0f4c81;
+    box-shadow: 0 0 10px #0f4c81aa;
+  }
+  form .error-msg {
+    color: #e74c3c;
+    font-weight: 600;
+    margin-top: 0.6rem;
+    font-size: 1rem;
+    min-height: 1.4em;
+  }
+  form button {
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+    background-color: #0f4c81;
+    color: white;
+    font-weight: 700;
+    padding: 1rem;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.15rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  form button:hover, form button:focus {
+    background-color: #133f69;
+    outline: none;
+  }
+  .close-modal {
+    margin-top: 1.3rem;
+    display: block;
+    text-align: center;
+    font-size: 1rem;
+    color: #0f4c81;
+    cursor: pointer;
+    user-select: none;
+  }
+  .close-modal:hover, .close-modal:focus {
+    text-decoration: underline;
+    outline: none;
+  }
+
+  /* Dashboard */
+  #dashboard {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+  }
+  #dashboard h3 {
+    margin-top: 0;
+    color: #0f4c81;
+    font-size: 1.5rem;
+  }
+  #dashboard p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  #dashboard ul {
+    list-style: none;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  #dashboard ul li {
+    background: #dbeefd;
+    margin: 0.5rem 0;
+    padding: 1rem 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+    font-size: 1rem;
+  }
+  #dashboard ul li:hover, #dashboard ul li:focus {
+    background-color: #a8cffee0;
+    outline: none;
+  }
+  #dashboard button.logout {
+    margin-top: 1.5rem;
+    background-color: #ef4444;
+    border-radius: 30px;
+    border: none;
+    color: white;
+    font-weight: 700;
+    padding: 1rem;
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+  }
+  #dashboard button.logout:hover, #dashboard button.logout:focus {
+    background-color: #b91c1c;
+    outline: none;
+  }
+
+  /* Scrollbars */
+  main::-webkit-scrollbar,
+  ul.news-list::-webkit-scrollbar,
+  #dashboard ul::-webkit-scrollbar {
+    width: 8px;
+  }
+  main::-webkit-scrollbar-thumb,
+  ul.news-list::-webkit-scrollbar-thumb,
+  #dashboard ul::-webkit-scrollbar-thumb {
+    background-color: #0f4c81cc;
+    border-radius: 10px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 700px) {
+    body {
+      max-width: 100vw;
+      padding: 0 0.2rem;
+    }
+    header h1 {
+      font-size: 1.3rem;
+    }
+    nav a {
+      font-size: 0.9rem;
+      gap: 0.8rem;
+    }
+    main {
+      padding: 1rem 1rem 1rem 1rem;
+      margin-top: 280px;
+    }
+    .hero {
+      font-size: 1.75rem;
+      padding: 2rem 1.5rem 1rem 1.5rem;
+    }
+    .hero h2 {
+      font-size: 2rem;
+    }
+    .hero p {
+      font-size: 1.1rem;
+    }
+    .quick-links {
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 0.7rem;
+    }
+    .quick-links button {
+      padding: 1.1rem 0;
+      font-size: 0.9rem;
+    }
+    .quick-links button svg {
+      width: 24px;
+      height: 24px;
+    }
+    section {
+      padding: 1rem 1.2rem;
+    }
+    section h3 {
+      font-size: 1.1rem;
+    }
+    #dashboard h3 {
+      font-size: 1.3rem;
+    }
+    #dashboard ul li {
+      font-size: 0.95rem;
+      padding: 0.8rem 1rem;
+    }
+    #dashboard button.logout {
+      font-size: 1rem;
+      padding: 0.8rem 1rem;
+    }
+    .login-content {
+      padding: 1.5rem 2rem;
+      max-width: 320px;
+    }
+    .login-content h3 {
+      font-size: 1.4rem;
+    }
+    form label {
+      font-size: 0.9rem;
+    }
+    form input[type="text"],
+    form input[type="password"] {
+      font-size: 1rem;
+      padding: 0.55rem 0.75rem;
+    }
+    form button {
+      font-size: 1rem;
+      padding: 0.75rem;
+      margin-top: 1.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-container">
+    <img src="badge1.png" alt="Ridgeway Grammar Primary School Logo" />
+  </div>
+  <h1>Ridgeway Grammar Primary School</h1>
+  <nav aria-label="Primary navigation">
+    <a href="#" id="navHome" tabindex="0">Home</a>
+    <a href="#" id="navAbout" tabindex="0">About</a>
+    <a href="#" id="navLogin" tabindex="0">Login</a>
+  </nav>
+</header>
+
+<div class="slider-container" aria-label="Image slideshow">
+  <div class="slider" id="slider">
+    <div class="slide slide1" role="img" aria-label="School Students Studying"></div>
+    <div class="slide slide2" role="img" aria-label="School Building Exterior"></div>
+    <div class="slide slide3" role="img" aria-label="Students Playing Sports"></div>
+    <div class="slide slide4" role="img" aria-label="School Library"></div>
+  </div>
+  <button class="nav-button nav-left" id="prevBtn" aria-label="Previous slide" tabindex="0">&#10094;</button>
+  <button class="nav-button nav-right" id="nextBtn" aria-label="Next slide" tabindex="0">&#10095;</button>
+
+  <div class="hero" aria-live="polite" aria-atomic="true">
+    <h2>Welcome to Ridgeway Grammar Primary School</h2>
+    <p>Where every child shines and grows</p>
+  </div>
+</div>
+
+<main id="mainContent" tabindex="0">
+  <!-- Landing page content will be rendered here -->
+</main>
+
+<!-- Login Modal -->
+<div id="loginModal" aria-hidden="true" role="dialog" aria-labelledby="loginTitle" aria-modal="true">
+  <div class="login-content" role="document">
+    <h3 id="loginTitle">Student Login</h3>
+    <form id="loginForm" autocomplete="off" novalidate>
+      <label for="usernameInput">Username</label>
+      <input type="text" id="usernameInput" name="username" placeholder="Enter username" autocomplete="username" required />
+      <label for="passwordInput">Password</label>
+      <input type="password" id="passwordInput" name="password" placeholder="Enter password" autocomplete="current-password" required />
+      <p class="error-msg" id="loginError" aria-live="assertive"></p>
+      <button type="submit">Login</button>
+    </form>
+    <button class="close-modal" id="closeLogin" aria-label="Close login form">Cancel</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  // Demo student data
+  const students = [
+    {
+      username: "alice123",
+      password: "passAlice",
+      name: "Alice Johnson",
+      resources: [
+        { title: "Math Worksheet 1", link: "https://example.com/resources/math1.pdf" },
+        { title: "History Presentation", link: "https://example.com/resources/history.ppt" },
+        { title: "Chemistry Lab Manual", link: "https://example.com/resources/chem_lab.pdf" },
+      ],
+    },
+    {
+      username: "bob456",
+      password: "passBob",
+      name: "Bob Smith",
+      resources: [
+        { title: "English Literature Notes", link: "https://example.com/resources/english_notes.pdf" },
+        { title: "Biology Video Lecture", link: "https://example.com/resources/bio_video.mp4" },
+      ],
+    },
+    {
+      username: "carla789",
+      password: "passCarla",
+      name: "Carla Williams",
+      resources: [
+        { title: "Physics Formulas Sheet", link: "https://example.com/resources/physics_formulas.pdf" },
+        { title: "Art Assignment", link: "https://example.com/resources/art_assignment.pdf" },
+      ],
+    }
+  ];
+
+  // Cached elements
+  const mainContent = document.getElementById('mainContent');
+  const loginModal = document.getElementById('loginModal');
+  const loginForm = document.getElementById('loginForm');
+  const loginError = document.getElementById('loginError');
+  const closeLoginBtn = document.getElementById('closeLogin');
+
+  // Navigation links
+  const navHome = document.getElementById('navHome');
+  const navAbout = document.getElementById('navAbout');
+  const navLogin = document.getElementById('navLogin');
+
+  // State
+  let currentUser = null;
+
+  // Slider variables
+  const slider = document.getElementById('slider');
+  const slides = slider.children;
+  const totalSlides = slides.length;
+  let currentSlide = 0;
+  let slideInterval;
+
+  // Utility: sanitize text to prevent HTML injection
+  function sanitize(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // About page content as a string
+  const aboutPageContent = `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>About Ridgeway Grammar Primary School</title>
+    <style>
+      body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 2rem; background: #f4f6f8; color: #222831;}
+      h1 {color: #0f4c81; font-size: 2.2rem; margin-bottom: 1rem;}
+      p {font-size: 1.1rem; margin-bottom: 1rem; line-height: 1.5;}
+      footer {font-size: 0.85rem; color: #555; margin-top: 3rem;}
+    </style>
+  </head>
+  <body>
+    <h1>About Ridgeway Grammar Primary School</h1>
+    <p>Ridgeway Grammar Primary School is committed to providing a nurturing and inclusive learning environment that fosters academic excellence and personal growth. We empower our students to become confident, responsible citizens.</p>
+    <p>Our dedicated teachers use innovative teaching methods to make learning engaging and fun. Join us to experience a vibrant school culture full of opportunities.</p>
+    <footer>&copy; 2024 Ridgeway Grammar Primary School - All rights reserved</footer>
+  </body>
+  </html>
+  `;
+
+  // Opens a new tab with the about page content using Blob URL
+  function openAboutPage() {
+    const blob = new Blob([aboutPageContent], {type: 'text/html'});
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+
+  // Slider Controls
+  function showSlide(index) {
+    if (index >= totalSlides) index = 0;
+    if (index < 0) index = totalSlides - 1;
+    slider.style.transform = `translateX(-${index * 100}%)`;
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    showSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentSlide - 1);
+  }
+
+  function startSlideShow() {
+    slideInterval = setInterval(nextSlide, 5000);
+  }
+
+  function stopSlideShow() {
+    clearInterval(slideInterval);
+  }
+
+  // Render functions
+  function renderLanding() {
+    mainContent.innerHTML = `
+      <section aria-labelledby="newsTitle">
+        <h3 id="newsTitle">Latest News</h3>
+        <ul class="news-list" aria-live="polite" aria-relevant="additions">
+          <li>School Reopens on 1st September 2024</li>
+          <li>Annual Science Fair scheduled for 15th October 2024</li>
+          <li>New Computer Lab inaugurated last week</li>
+          <li>Parent-Teacher Meetings on 20th & 21st September</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="quickLinksTitle">
+        <h3 id="quickLinksTitle">Quick Links</h3>
+        <div class="quick-links">
+          <button type="button" tabindex="0" aria-label="About Ridgeway Grammar Primary School" id="btnAbout">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-3.33 0-6 2-6 4v2h12v-2c0-2-2.67-4-6-4z"/>
+            </svg>
+            About Us
+          </button>
+          <button type="button" tabindex="0" aria-label="View school calendar" id="btnCalendar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.11-.9-2-2-2zm0 14H5V9h14v9z"/>
+            </svg>
+            Calendar
+          </button>
+          <button type="button" tabindex="0" aria-label="Contact the school" id="btnContact">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M21 8V7l-3 2.29V8h-3v4h3v-1.29L21 12v-1l-3-1.71L21 8zM3 5h18a2 2 0 012 2v9a2 2 0 01-2 2H3a2 2 0 01-2-2V7a2 2 0 012-2zm1.5 7L3 14.17v.33a2 2 0 002 2h14a2 2 0 002-2v-.33L19.5 12H4.5z"/>
+            </svg>
+            Contact Us
+          </button>
+          <button type="button" tabindex="0" aria-label="Student login to portal" id="btnLoginMain">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M10.09 15.59l4.58-4.59-4.58-4.59L11.5 5.5l6 6-6 6-1.41-1.41zM6 19v-2H3V7h3V5H2v14h4z"/>
+            </svg>
+            Student Login
+          </button>
+        </div>
+      </section>
+    `;
+    // Add event listeners to these quick links
+    document.getElementById('btnAbout').addEventListener('click', () => {
+      openAboutPage();
+    });
+    document.getElementById('btnCalendar').addEventListener('click', () => {
+      alert('School calendar will be updated soon.');
+    });
+    document.getElementById('btnContact').addEventListener('click', () => {
+      alert('Contact us at: info@ridgewayprimary.edu or call 123-456-7890.');
+    });
+    document.getElementById('btnLoginMain').addEventListener('click', () => {
+      openLoginModal();
+    });
+  }
+
+  // Focus main content for accessibility
+  function focusMain () {
+    mainContent.focus();
+  }
+
+  // Login modal controls
+  function openLoginModal() {
+    loginModal.classList.add('active');
+    loginModal.setAttribute('aria-hidden', 'false');
+    document.getElementById('usernameInput').focus();
+  }
+  function closeLoginModal() {
+    loginModal.classList.remove('active');
+    loginModal.setAttribute('aria-hidden', 'true');
+    loginError.textContent = '';
+    loginForm.reset();
+    focusMain();
+  }
+
+  // Handle login submit
+  function onLoginSubmit(e) {
+    e.preventDefault();
+    const username = loginForm.username.value.trim();
+    const password = loginForm.password.value;
+
+    if (!username || !password) {
+      loginError.textContent = 'Please enter both username and password.';
+      return;
+    }
+
+    const found = students.find(s => s.username.toLowerCase() === username.toLowerCase() && s.password === password);
+    if (found) {
+      currentUser = found;
+      closeLoginModal();
+      renderDashboard();
+    } else {
+      loginError.textContent = 'Invalid username or password.';
+    }
+  }
+
+  // Render dashboard for logged in user
+  function renderDashboard() {
+    if (!currentUser) {
+      renderLanding();
+      return;
+    }
+    const resourcesHTML = currentUser.resources.map(r => `
+      <li tabindex="0" role="link" aria-label="Open resource ${sanitize(r.title)}" data-link="${sanitize(r.link)}">${sanitize(r.title)}</li>
+    `).join('');
+
+    mainContent.innerHTML = `
+      <section id="dashboard" aria-labelledby="dashboardTitle">
+        <h3 id="dashboardTitle">Welcome back, ${sanitize(currentUser.name)}!</h3>
+        <p>Access your learning resources below. Tap or click to open.</p>
+        <ul>
+          ${resourcesHTML}
+        </ul>
+        <button class="logout" id="btnLogout">Logout</button>
+      </section>
+    `;
+
+    // Attach click & keyboard event to resource list items
+    const resourceItems = mainContent.querySelectorAll('#dashboard ul li');
+    resourceItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const url = item.getAttribute('data-link');
+        if (url) window.open(url, '_blank', 'noopener,noreferrer');
+      });
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          item.click();
+        }
+      });
+    });
+
+    document.getElementById('btnLogout').addEventListener('click', () => {
+      currentUser = null;
+      renderLanding();
+      focusMain();
+    });
+    focusMain();
+  }
+
+  // Nav link handlers
+  navHome.addEventListener('click', (e) => {
+    e.preventDefault();
+    renderLanding();
+    focusMain();
+  });
+  navAbout.addEventListener('click', (e) => {
+    e.preventDefault();
+    openAboutPage();
+  });
+  navLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    openLoginModal();
+  });
+
+  closeLoginBtn.addEventListener('click', () => {
+    closeLoginModal();
+  });
+
+  loginForm.addEventListener('submit', onLoginSubmit);
+
+  // Modal close on outside click
+  loginModal.addEventListener('click', (e) => {
+    if(e.target === loginModal) {
+      closeLoginModal();
+    }
+  });
+
+  // ESC key closes modal if open
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && loginModal.classList.contains('active')) {
+      closeLoginModal();
+    }
+  });
+
+  // Slider navigation buttons
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    prevSlide();
+    stopSlideShow();
+    startSlideShow();
+  });
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    nextSlide();
+    stopSlideShow();
+    startSlideShow();
+  });
+
+  // Initialize page and slider
+  function init() {
+    renderLanding();
+    showSlide(0);
+    startSlideShow();
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
+
