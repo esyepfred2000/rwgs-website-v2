@@ -32,8 +32,6 @@
     align-items: center;
     padding: 0.75rem 1rem;
     user-select: none;
-    z-index: 1001;
-    position: relative;
   }
   .logo-container {
     display: flex;
@@ -71,100 +69,34 @@
     outline: none;
   }
 
-  /* Slider container */
-  .slider-container {
-    position: relative;
-    width: 100%;
-    max-width: 1200px;
-    height: 280px;
-    overflow: hidden;
-    margin-top: 0;
-    user-select: none;
-  }
-  .slider {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s ease-in-out;
-  }
-  .slide {
-    flex: 0 0 100%;
-    height: 100%;
-    background-position: center;
-    background-size: cover;
-  }
-  /* Sample backgrounds for slides */
-  .slide1 {
-    background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80');
-  }
-  .slide2 {
-    background-image: url('https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=1200&q=80');
-  }
-  .slide3 {
-    background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80');
-  }
-  .slide4 {
-    background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80');
-  }
-  /* Navigation buttons */
-  .nav-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(15, 76, 129, 0.7);
-    color: white;
-    font-size: 2rem;
-    padding: 0.2rem 0.6rem;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s;
-    z-index: 1002;
-  }
-  .nav-button:hover, .nav-button:focus {
-    background-color: rgba(15, 76, 129, 0.9);
-    outline: none;
-  }
-  .nav-left {
-    left: 16px;
-  }
-  .nav-right {
-    right: 16px;
-  }
-
-  /* Hero Section (text overlay on slider) */
-  .hero {
-    position: absolute;
-    top: 40px; /* slightly below header */
-    width: 100%;
-    max-width: 1200px;
-    color: white;
-    text-align: center;
-    pointer-events: none;
-    z-index: 1003;
-    padding: 2rem 1rem 1rem 1rem;
-    user-select: none;
-  }
-  .hero h2 {
-    font-size: 2.75rem;
-    font-weight: 700;
-    margin: 0 0 0.3rem 0;
-    text-shadow: 0 3px 8px rgba(0,0,0,0.7);
-  }
-  .hero p {
-    margin: 0;
-    font-weight: 500;
-    font-size: 1.5rem;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.7);
-  }
-
   /* Main container */
   main {
     flex: 1;
     overflow-y: auto;
     padding: 1.5rem 2rem;
-    margin-top: 280px; /* Push down below slider */
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 3rem 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    box-shadow: 0 5px 15px rgb(0 0 0 / 0.15);
+  }
+  .hero h2 {
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+    font-size: 2.25rem;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+  }
+  .hero p {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1.25rem;
   }
 
   /* Sections */
@@ -406,17 +338,15 @@
     }
     main {
       padding: 1rem 1rem 1rem 1rem;
-      margin-top: 280px;
     }
     .hero {
-      font-size: 1.75rem;
-      padding: 2rem 1.5rem 1rem 1.5rem;
+      padding: 2.5rem 1.5rem;
     }
     .hero h2 {
-      font-size: 2rem;
+      font-size: 1.75rem;
     }
     .hero p {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
     .quick-links {
       grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
@@ -482,22 +412,6 @@
     <a href="#" id="navLogin" tabindex="0">Login</a>
   </nav>
 </header>
-
-<div class="slider-container" aria-label="Image slideshow">
-  <div class="slider" id="slider">
-    <div class="slide slide1" role="img" aria-label="School Students Studying"></div>
-    <div class="slide slide2" role="img" aria-label="School Building Exterior"></div>
-    <div class="slide slide3" role="img" aria-label="Students Playing Sports"></div>
-    <div class="slide slide4" role="img" aria-label="School Library"></div>
-  </div>
-  <button class="nav-button nav-left" id="prevBtn" aria-label="Previous slide" tabindex="0">&#10094;</button>
-  <button class="nav-button nav-right" id="nextBtn" aria-label="Next slide" tabindex="0">&#10095;</button>
-
-  <div class="hero" aria-live="polite" aria-atomic="true">
-    <h2>Welcome to Ridgeway Grammar Primary School</h2>
-    <p>Where every child shines and grows</p>
-  </div>
-</div>
 
 <main id="mainContent" tabindex="0">
   <!-- Landing page content will be rendered here -->
@@ -568,13 +482,6 @@
   // State
   let currentUser = null;
 
-  // Slider variables
-  const slider = document.getElementById('slider');
-  const slides = slider.children;
-  const totalSlides = slides.length;
-  let currentSlide = 0;
-  let slideInterval;
-
   // Utility: sanitize text to prevent HTML injection
   function sanitize(text) {
     const div = document.createElement('div');
@@ -582,63 +489,14 @@
     return div.innerHTML;
   }
 
-  // About page content as a string
-  const aboutPageContent = `
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>About Ridgeway Grammar Primary School</title>
-    <style>
-      body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 2rem; background: #f4f6f8; color: #222831;}
-      h1 {color: #0f4c81; font-size: 2.2rem; margin-bottom: 1rem;}
-      p {font-size: 1.1rem; margin-bottom: 1rem; line-height: 1.5;}
-      footer {font-size: 0.85rem; color: #555; margin-top: 3rem;}
-    </style>
-  </head>
-  <body>
-    <h1>About Ridgeway Grammar Primary School</h1>
-    <p>Ridgeway Grammar Primary School is committed to providing a nurturing and inclusive learning environment that fosters academic excellence and personal growth. We empower our students to become confident, responsible citizens.</p>
-    <p>Our dedicated teachers use innovative teaching methods to make learning engaging and fun. Join us to experience a vibrant school culture full of opportunities.</p>
-    <footer>&copy; 2024 Ridgeway Grammar Primary School - All rights reserved</footer>
-  </body>
-  </html>
-  `;
-
-  // Opens a new tab with the about page content using Blob URL
-  function openAboutPage() {
-    const blob = new Blob([aboutPageContent], {type: 'text/html'});
-    const url = URL.createObjectURL(blob);
-    window.open(url, '_blank', 'noopener,noreferrer');
-  }
-
-  // Slider Controls
-  function showSlide(index) {
-    if (index >= totalSlides) index = 0;
-    if (index < 0) index = totalSlides - 1;
-    slider.style.transform = `translateX(-${index * 100}%)`;
-    currentSlide = index;
-  }
-
-  function nextSlide() {
-    showSlide(currentSlide + 1);
-  }
-
-  function prevSlide() {
-    showSlide(currentSlide - 1);
-  }
-
-  function startSlideShow() {
-    slideInterval = setInterval(nextSlide, 5000);
-  }
-
-  function stopSlideShow() {
-    clearInterval(slideInterval);
-  }
-
   // Render functions
   function renderLanding() {
     mainContent.innerHTML = `
+      <section class="hero" aria-label="Welcome banner">
+        <h2>Welcome to Ridgeway Grammar Primary School</h2>
+        <p>Where every child shines and grows</p>
+      </section>
+      
       <section aria-labelledby="newsTitle">
         <h3 id="newsTitle">Latest News</h3>
         <ul class="news-list" aria-live="polite" aria-relevant="additions">
@@ -681,7 +539,8 @@
     `;
     // Add event listeners to these quick links
     document.getElementById('btnAbout').addEventListener('click', () => {
-      openAboutPage();
+      renderAbout();
+      focusMain();
     });
     document.getElementById('btnCalendar').addEventListener('click', () => {
       alert('School calendar will be updated soon.');
@@ -691,6 +550,21 @@
     });
     document.getElementById('btnLoginMain').addEventListener('click', () => {
       openLoginModal();
+    });
+  }
+
+  function renderAbout() {
+    mainContent.innerHTML = `
+      <section aria-labelledby="aboutTitle">
+        <h3 id="aboutTitle">About Ridgeway Grammar Primary School</h3>
+        <p>Ridgeway Grammar Primary School is committed to providing a nurturing and inclusive learning environment that fosters academic excellence and personal growth. We empower our students to become confident, responsible citizens.</p>
+        <p>Our dedicated teachers use innovative teaching methods to make learning engaging and fun. Join us to experience a vibrant school culture full of opportunities.</p>
+        <button id="btnBackHome" type="button" aria-label="Back to home page">Back to Home</button>
+      </section>
+    `;
+    document.getElementById('btnBackHome').addEventListener('click', () => {
+      renderLanding();
+      focusMain();
     });
   }
 
@@ -786,7 +660,8 @@
   });
   navAbout.addEventListener('click', (e) => {
     e.preventDefault();
-    openAboutPage();
+    renderAbout();
+    focusMain();
   });
   navLogin.addEventListener('click', (e) => {
     e.preventDefault();
@@ -813,23 +688,9 @@
     }
   });
 
-  // Slider navigation buttons
-  document.getElementById('prevBtn').addEventListener('click', () => {
-    prevSlide();
-    stopSlideShow();
-    startSlideShow();
-  });
-  document.getElementById('nextBtn').addEventListener('click', () => {
-    nextSlide();
-    stopSlideShow();
-    startSlideShow();
-  });
-
-  // Initialize page and slider
+  // Initialize page
   function init() {
     renderLanding();
-    showSlide(0);
-    startSlideShow();
   }
 
   init();
@@ -837,4 +698,3 @@
 </script>
 </body>
 </html>
-
